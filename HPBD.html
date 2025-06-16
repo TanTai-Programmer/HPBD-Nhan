@@ -1,0 +1,365 @@
+<!DOCTYPE html>
+<html lang="vi">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Chúc Mừng Sinh Nhật</title>
+    <style>
+        html,
+        body {
+            margin: 0;
+            padding: 0;
+            height: 100%;
+            background: linear-gradient(to bottom, #5afd70, #6affff, #ff8cb2);
+            font-family: 'Segoe UI', sans-serif;
+            overflow: hidden;
+            text-align: center;
+            color: #fff;
+        }
+
+        h1 {
+            font-size: 3em;
+            margin-top: 20px;
+            text-shadow: 2px 2px 5px #000;
+        }
+
+        .typing {
+            font-size: 2.5em;
+            margin-top: 10px;
+            height: 60px;
+            white-space: nowrap;
+            overflow: hidden;
+            border-right: 3px solid white;
+            display: inline-block;
+            animation: blink 0.7s step-end infinite;
+        }
+
+        @keyframes blink {
+            50% {
+                border-color: transparent;
+            }
+        }
+
+        .cake {
+            position: absolute;
+            bottom: 10px;
+            left: 50%;
+            transform: translateX(-50%);
+            cursor: pointer;
+            z-index: 2;
+        }
+
+        svg {
+            width: 600px;
+            height: auto;
+        }
+
+        /* 🌠 Tùy chỉnh ảnh rơi tại đây */
+        .falling {
+            position: absolute;
+            top: -100px;
+            animation: fall linear infinite;
+            pointer-events: none;
+            z-index: 1;
+
+            width: var(--img-size, 80px);
+            height: var(--img-size, 80px);
+            border-radius: var(--img-radius, 50%);
+            object-fit: cover;
+            border: 5px solid white;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+        }
+
+        @keyframes fall {
+            to {
+                transform: translateY(110vh) rotate(360deg);
+            }
+        }
+
+        audio {
+            display: none;
+        }
+
+        h1 {
+            font-size: 3rem;
+            color: hsl(339, 41%, 87%);
+            animation: glow 2s ease-in-out infinite alternate;
+            text-align: center;
+            font-weight: 700;
+        }
+
+        @keyframes glow {
+            from {
+                text-shadow: 0 0 5px #ff4081, 0 0 10px #ff4081, 0 0 20px #ff4081;
+            }
+
+            to {
+                text-shadow: 0 0 20px #ff79c6, 0 0 30px #ff79c6, 0 0 40px #ff79c6;
+            }
+        }
+
+        /* Animation thổi nến (ẩn dần) */
+        .blow-out #flame {
+            animation: blowOutFade 2s forwards;
+        }
+
+        .blow-out #flameGlowCircle {
+            animation: blowOutGlow 2s forwards;
+        }
+
+        @keyframes blowOutFade {
+            0% {
+                opacity: 1;
+            }
+
+            100% {
+                opacity: 0;
+                transform: translateY(-15px) scale(0.7);
+            }
+        }
+
+        @keyframes blowOutGlow {
+            0% {
+                opacity: 0.6;
+            }
+
+            100% {
+                opacity: 0;
+                transform: scale(1.2);
+            }
+        }
+
+        .snowfall {
+            pointer-events: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            overflow: hidden;
+            z-index: 999;
+        }
+
+        .snow-dot {
+            position: absolute;
+            top: -20px;
+            width: 12px;
+            height: 12px;
+            background: rgba(240, 106, 106, 0.8);
+            border-radius: 50%;
+            box-shadow: 0 0 6px rgba(255, 255, 255, 0.5);
+            animation: fall linear infinite;
+        }
+
+        @keyframes fall {
+            0% {
+                transform: translateY(0) translateX(0);
+                opacity: 1;
+            }
+
+            100% {
+                transform: translateY(100vh) translateX(30px);
+                opacity: 0;
+            }
+        }
+        .img-hieu{
+            position: absolute;
+            bottom: 15%;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 200px;
+            height: auto;
+            z-index: 3;
+        }
+        #hieu1{
+            width:50%;
+            height: auto;
+            border-radius: 15%;
+            box-shadow: 4px 4px 10px rgba(240, 106, 106, 0.8);
+        }
+        .an-hieu {
+            font-size: 1.5rem;
+            margin-top: 10px;
+            color: #ff408d;
+            text-shadow: 2px 2px 5px rgba(0, 0, 0, 0.5);
+        }
+         .copyright {
+    text-align: center;
+    font-size: 0.9rem;
+    color: #ffffffcc;
+    padding: 10px 0;
+    position: fixed;
+    bottom: 0;
+    width: 100%;
+    z-index: 1000;
+    font-family: 'Segoe UI', sans-serif;
+  }
+    </style>
+</head>
+
+<body>
+    <h1>🎉 Chúc Mừng Sinh Nhật 🎂</h1>
+    <div class="typing" id="message"></div>
+    <div class="cake" id="cake" style="cursor:pointer;">
+        <svg viewBox="0 0 300 400" width="600" height="800" xmlns="http://www.w3.org/2000/svg">
+            <!-- Tầng bánh như trước -->
+            <ellipse cx="150" cy="330" rx="100" ry="20" fill="#d46a6a" />
+            <rect x="50" y="250" width="200" height="80" rx="20" fill="#ff9aa2" />
+            <path d="M50 270 Q70 250, 90 270 T130 270 T170 270 T210 270 T250 270 V330 H50 Z" fill="#fff" />
+
+            <ellipse cx="150" cy="240" rx="75" ry="15" fill="#e28c3d" />
+            <rect x="75" y="190" width="150" height="50" rx="15" fill="#ffb347" />
+            <path d="M75 205 Q90 190, 105 205 T135 205 T165 205 T195 205 T225 205 V240 H75 Z" fill="#fff" />
+
+            <ellipse cx="150" cy="180" rx="50" ry="10" fill="#5ab85a" />
+            <rect x="100" y="140" width="100" height="40" rx="10" fill="#77dd77" />
+            <path d="M100 155 Q110 140, 120 155 T140 155 T160 155 T180 155 T200 155 V180 H100 Z" fill="#fff" />
+
+            <!-- Cây nến -->
+            <rect x="135" y="40" width="30" height="100" rx="6" fill="#8a2be2" />
+
+            <!-- Định nghĩa gradient cho vầng sáng -->
+            <defs>
+                <radialGradient id="flameGlow" cx="50%" cy="50%" r="50%" fx="50%" fy="50%">
+                    <stop offset="0%" stop-color="gold" stop-opacity="0.6" />
+                    <stop offset="60%" stop-color="gold" stop-opacity="0.2" />
+                    <stop offset="100%" stop-color="gold" stop-opacity="0" />
+                </radialGradient>
+
+                <!-- Gradient cho ngọn lửa -->
+                <radialGradient id="flameGradient" cx="50%" cy="40%" r="50%">
+                    <stop offset="0%" stop-color="yellow" />
+                    <stop offset="60%" stop-color="orange" />
+                    <stop offset="100%" stop-color="red" />
+                </radialGradient>
+            </defs>
+
+            <!-- Vầng sáng -->
+            <circle id="flameGlowCircle" cx="150" cy="35" r="30" fill="url(#flameGlow)" />
+
+            <!-- Ngọn lửa -->
+            <path id="flame" fill="url(#flameGradient)" stroke="orange" stroke-width="1" d="M150 20
+         C143 40, 157 40, 150 20
+         Q153 35, 150 50
+         Q147 35, 150 20
+         Z">
+                <animate attributeName="d" dur="1.5s" repeatCount="indefinite" values="
+          M150 20 C143 40, 157 40, 150 20 Q153 35, 150 50 Q147 35, 150 20 Z;
+          M150 22 C145 38, 155 38, 150 22 Q154 33, 150 48 Q146 33, 150 22 Z;
+          M150 20 C143 40, 157 40, 150 20 Q153 35, 150 50 Q147 35, 150 20 Z
+        " />
+                <animate attributeName="fill-opacity" values="1;0.8;1" dur="1.5s" repeatCount="indefinite" />
+            </path>
+        </svg>
+    </div>
+    <div class="img-hieu">
+        <img src="Hieu1.jpg" alt=" Ảnh dìm của Hiếu gửi" id="hieu1">
+        <p class="an-hieu" style="color:#ff408d">Mời Bạn Nhàn ăn món ngon này</p>
+    </div>
+    <div class="snowfall"></div>
+
+    <audio autoplay loop id="music">
+        <source src="happy_birthday.mp3" type="audio/mpeg" />
+    </audio>
+<footer class="copyright">
+  &copy; 2025 Gửi tặng người bạn thân yêu – Từ Gia Đình Lom Dom 💖
+</footer>
+    <script>
+        const cake = document.getElementById('cake');
+        const flame = document.getElementById('flame');
+        const glow = document.getElementById('flameGlowCircle');
+
+        cake.addEventListener('click', () => {
+            if (!cake.classList.contains('blow-out')) {
+                cake.classList.add('blow-out');
+            }
+        });
+        // 💬 Hiệu ứng chữ chạy
+        const messages = [
+            "Chúc mừng sinh nhật Nhàn AKA 2 PAC tuổi 22! 🎉",
+            "Tuổi mới thật nhiều niềm vui và thành công 💖",
+            "Chúc Nhàn luôn tỏa sáng và hạnh phúc trong cuộc sống ✨",
+            "Mong rằng mọi ước mơ của bạn sẽ trở thành hiện thực 🌈",
+            "Thổi nến và ước điều ước tuyệt vời nha 🎂"
+        ];
+
+        let msgIndex = 0;
+        let charIndex = 0;
+        const messageDiv = document.getElementById("message");
+
+        function typeEffect() {
+            if (charIndex < messages[msgIndex].length) {
+                messageDiv.textContent += messages[msgIndex].charAt(charIndex);
+                charIndex++;
+                setTimeout(typeEffect, 70);
+            } else {
+                setTimeout(() => {
+                    messageDiv.textContent = "";
+                    charIndex = 0;
+                    msgIndex = (msgIndex + 1) % messages.length;
+                    typeEffect();
+                }, 2500);
+            }
+        }
+
+        typeEffect();
+
+        // 🕯️ Thổi tắt nến
+        document.getElementById('cake').addEventListener('click', () => {
+            document.getElementById('flame').style.display = 'none';
+        });
+
+        // 🌠 Hình rơi + icon pháo hoa / bánh kem
+        const fallImages = [
+            'Nhan1.jpg', 'Nhan2.jpg', 'Nhan3.jpg', 'Nhan4.jpg', 'Nhan5.jpg', 'Nhan6.jpg',
+        ];
+        const totalItems = 5;
+
+        for (let i = 0; i < totalItems; i++) {
+            if (fallImages[i % fallImages.length].endsWith(".jpg")) {
+                const img = document.createElement('img');
+                img.src = fallImages[i % fallImages.length];
+                img.className = 'falling';
+                img.style.setProperty('--img-size', 200 + Math.random() * 30 + 'px');
+                img.style.setProperty('--img-radius', Math.random() > 0.5 ? '50%' : '20%');
+                img.style.left = Math.random() * 90 + 'vw';
+                img.style.animationDuration = 6 + Math.random() * 4 + 's';
+                img.style.animationDelay = Math.random() * 5 + 's';
+                document.body.appendChild(img);
+            } else {
+                const span = document.createElement('div');
+                span.textContent = fallImages[i % fallImages.length];
+                span.className = 'falling';
+                span.style.setProperty('--img-size', 60 + Math.random() * 20 + 'px');
+                span.style.fontSize = '2rem';
+                span.style.lineHeight = '1.5';
+                span.style.left = Math.random() * 100 + 'vw';
+                span.style.animationDuration = 6 + Math.random() * 4 + 's';
+                span.style.animationDelay = Math.random() * 5 + 's';
+                document.body.appendChild(span);
+            }
+        }
+        const snowContainer = document.querySelector('.snowfall');
+
+        function createSnowDot() {
+            const dot = document.createElement('div');
+            dot.classList.add('snow-dot');
+
+            const size = Math.random() * 20 + 4; // 4px đến 12px
+            dot.style.width = `${size}px`;
+            dot.style.height = `${size}px`;
+
+            dot.style.left = `${Math.random() * 100}vw`;
+            dot.style.animationDuration = `${Math.random() * 3 + 3}s`;
+            dot.style.opacity = Math.random() * 0.7 + 0.3;
+
+            snowContainer.appendChild(dot);
+
+            setTimeout(() => dot.remove(), 7000);
+        }
+
+        setInterval(createSnowDot, 120); // mật độ rơi
+    </script>
+</body>
+
+</html>
